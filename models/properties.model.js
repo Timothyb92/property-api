@@ -79,22 +79,28 @@ async function getAllProperties(){
 }
 
 async function addProperty(listing) {
+  const currentListingNumber = properties.length + 1;
   const nullValues = [];
-  const newListng = Object.assign(propertyObject, listing);
 
-  for (const property in newListng) {
-    if (newListng[property] === null) {
+  const newListing = {
+    ...propertyObject,
+    ...listing,
+    listingNumber: currentListingNumber,
+  };
+
+  for (const property in newListing) {
+    if (newListing[property] === null) {
       nullValues.push(property);
     }
-  };
+  }
 
   if (nullValues.length > 0) {
     throw new Error(`Missing property fields: ${nullValues}`);
-  };
+  }
 
   console.log(`Running addProperty in properties model`);
-  properties.push(newListng);
-  return newListng;
+  properties.push(newListing);
+  return newListing;
 };
 
 module.exports = {

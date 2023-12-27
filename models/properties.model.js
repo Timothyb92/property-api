@@ -70,6 +70,9 @@ const propertyObject = {
 };
 
 async function getProperty(listingNumber) {
+  if (properties.length < listingNumber) {
+    return console.error(`Listing number does not exist`);
+  }
   console.log(`Listing owned by ${properties[listingNumber - 1].propOwner}`);
   return await properties[listingNumber - 1];
 };

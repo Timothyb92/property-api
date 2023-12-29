@@ -45,6 +45,9 @@ const properties = [
     listingNumber: 2,
     propOwner: 'Jinny',
     address: '777 Corona',
+    amenities: [
+      'wifi',
+    ]
   }
 ];
 
@@ -108,12 +111,18 @@ async function addProperty(listing) {
   return newListing;
 };
 
-async function addAmenities(listingId) {
-  
+async function updateAmenities(listingNumber, updatedAmenities) {
+ const property = properties[listingNumber - 1];
+ let amenities = property.amenities;
+
+ property.amenities = [...new Set([...amenities, ...updatedAmenities])];
+
+ return await property;
 }
 
 module.exports = {
   getProperty,
   getAllProperties,
   addProperty,
+  updateAmenities,
 };

@@ -70,11 +70,13 @@ const propertyObject = {
 };
 
 async function getProperty(listingNumber) {
+  const property = properties[listingNumber - 1];
+  
   if (properties.length < listingNumber) {
     return console.error(`Listing number does not exist`);
   }
-  console.log(`Listing owned by ${properties[listingNumber - 1].propOwner}`);
-  return await properties[listingNumber - 1];
+  console.log(`Listing owned by ${property.propOwner}`);
+  return await property;
 };
 
 async function getAllProperties(){
@@ -105,6 +107,10 @@ async function addProperty(listing) {
   properties.push(newListing);
   return newListing;
 };
+
+async function addAmenities(listingId) {
+  
+}
 
 module.exports = {
   getProperty,

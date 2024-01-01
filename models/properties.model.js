@@ -111,14 +111,24 @@ async function addProperty(listing) {
   return newListing;
 };
 
-async function updateAmenities(listingNumber, updatedAmenities) {
+async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
  const property = properties[listingNumber - 1];
- let amenities = property.amenities;
+ let currentAmenities = property.amenities;
 
- property.amenities = [...new Set([...amenities, ...updatedAmenities])];
+ if (addAmenities && Array.isArray(addAmenities)) {
+  console.log(`Adding amenities: ${addAmenities}`);
+   property.amenities = [...new Set([...currentAmenities, ...addAmenities])];
+ };
+
+ if (removeAmenities && Array.isArray(removeAmenities)) {
+  console.log(`Removing amenities: ${removeAmenities}`);
+  property.amenities = property.amenities.filter(
+    (amenity) => !removeAmenities.includes(amenity)
+  );
+ }
 
  return await property;
-}
+};
 
 module.exports = {
   getProperty,

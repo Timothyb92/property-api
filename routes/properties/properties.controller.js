@@ -23,11 +23,10 @@ async function httpAddProperty(req, res) {
 };
 
 async function httpUpdateAmenities(req, res) {
-  const property = req.params.id;
-  const amenities = req.body.amenities;
+  const propertyId = req.params.id;
+  const { addAmenities, removeAmenities } = req.body;
   
-  console.log(`Amenities: ${amenities}`);
-  return res.status(200).json(await updateAmenities(property, amenities));
+  return res.status(200).json(await updateAmenities(propertyId, addAmenities, removeAmenities));
 };
 
 module.exports = {

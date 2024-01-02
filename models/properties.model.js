@@ -18,22 +18,43 @@ const properties = [
     },
     sqFt: 2000,
     rooms: [
-      'bedroom 1',
-      'living room',
-      'bedroom 2',
-      'garage',
-      'lanai',
-      'bedroom 3',
-      'bedroom 4',
-      'kitchen',
+      {
+        name: 'bedroom 1',
+        beds: ['King']
+      },
+      {
+        name: 'living room',
+        beds: []
+      },
+      {
+        name: 'bedroom 2',
+        beds: ['Queen']
+      },
+      {
+        name: 'garage',
+        beds: []
+      },
+      {
+        name: 'lanai',
+        beds: []
+      },
+      {
+        name: 'bedroom 3',
+        beds: ['Twin', 'Twin', 'Queen']
+      },
+      {
+        name: 'bedroom 4',
+        beds: ['Twin bunk']
+      },
+      {
+        name: 'kitchen',
+        beds: []
+      },
     ],
-    //houseTheme: string,
     propertyType: 'single family',
     floors: 1,
     lotSize: 2300,
     parkingSpots: 4,
-    //interior features: string[],
-    //exterior features: string[],
     petFriendly: true,
     heatedPool: false,
     gatedCommunity: true,
@@ -47,8 +68,14 @@ const properties = [
     address: '777 Corona',
     amenities: [
       'wifi',
-    ]
-  }
+    ],
+    rooms: [
+      {
+        name: 'kitchen',
+        beds: []
+      },
+    ],
+  },
 ];
 
 const propertyObject = {
@@ -125,14 +152,33 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
   property.amenities = property.amenities.filter(
     (amenity) => !removeAmenities.includes(amenity)
   );
- }
+ };
 
  return await property;
 };
+
+ async function updateRooms(listingNumber, addRooms, removeRooms, updatedRooms) {
+  const property = properties[listingNumber - 1];
+  let currentRooms = property.rooms;
+
+  if (addRooms && Array.isArray(addRooms)) {
+    console.log(`Adding room(s): ${addRooms}`);
+    property.rooms = [...new Set([...currentRooms, ...addRooms])];
+  };
+
+  if (removeRooms && Array.isArray(removeRooms)) {
+    property.rooms = property.rooms.filter(
+      (room) => room.name !== removeRooms.includes(room.name) 
+    );
+  };
+
+  return await property;
+ };
 
 module.exports = {
   getProperty,
   getAllProperties,
   addProperty,
   updateAmenities,
+  updateRooms,
 };

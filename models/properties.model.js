@@ -167,8 +167,9 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
   };
 
   if (removeRooms && Array.isArray(removeRooms)) {
+    console.log(`Running removeRooms in model`);
     property.rooms = property.rooms.filter(
-      (room) => room.name !== removeRooms.includes(room.name) 
+      (room) => !removeRooms.includes(room.name)
     );
   };
 

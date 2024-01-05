@@ -176,10 +176,18 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
   return await property;
  };
 
+ async function updateDescription (listingNumber, description){
+  console.log(`Running updateDescription in model`);
+
+  property.ownerDescription = description;
+  return await property.ownerDescription;
+ }
+
 module.exports = {
   getProperty,
   getAllProperties,
   addProperty,
   updateAmenities,
   updateRooms,
+  updateDescription,
 };

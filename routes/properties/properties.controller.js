@@ -4,6 +4,7 @@ const {
   addProperty,
   updateAmenities,
   updateRooms,
+  updateDescription,
 } = require('../../models/properties.model');
 
 async function httpGetProperty(req, res) {
@@ -35,7 +36,14 @@ async function httpUpdateRooms(req, res) {
   const { addRooms, removeRooms, updatedRooms } = req.body;
 
   return res.status(200).json(await updateRooms(propertyId, addRooms, removeRooms, updatedRooms));
-}
+};
+
+async function httpUpdateDescription(req, res) {
+  const propertyId = req.params.id;
+  const { description } = req.body;
+
+  return res.status(200).json(await updateDescription(propertyId, description));
+};
 
 module.exports = {
   httpGetProperty,
@@ -43,4 +51,5 @@ module.exports = {
   httpAddProperty,
   httpUpdateAmenities,
   httpUpdateRooms,
+  httpUpdateDescription,
 };

@@ -133,7 +133,6 @@ async function addProperty(listing) {
     throw new Error(`Missing property fields: ${nullValues}`);
   }
 
-  console.log(`Running addProperty in properties model`);
   properties.push(newListing);
   return newListing;
 };
@@ -143,12 +142,10 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
  let currentAmenities = property.amenities;
 
  if (addAmenities && Array.isArray(addAmenities)) {
-  console.log(`Adding amenities: ${addAmenities}`);
    property.amenities = [...new Set([...currentAmenities, ...addAmenities])];
  };
 
  if (removeAmenities && Array.isArray(removeAmenities)) {
-  console.log(`Removing amenities: ${removeAmenities}`);
   property.amenities = property.amenities.filter(
     (amenity) => !removeAmenities.includes(amenity)
   );
@@ -162,12 +159,10 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
   let currentRooms = property.rooms;
 
   if (addRooms && Array.isArray(addRooms)) {
-    console.log(`Adding room(s): ${addRooms}`);
     property.rooms = [...new Set([...currentRooms, ...addRooms])];
   };
 
   if (removeRooms && Array.isArray(removeRooms)) {
-    console.log(`Running removeRooms in model`);
     property.rooms = property.rooms.filter(
       (room) => !removeRooms.includes(room.name)
     );
@@ -177,8 +172,6 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
  };
 
  async function updateDescription (listingNumber, description){
-  console.log(`Running updateDescription in model`);
-
   property.ownerDescription = description;
   return await property.ownerDescription;
  }

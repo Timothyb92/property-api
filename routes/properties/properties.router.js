@@ -1,9 +1,9 @@
 const express = require('express');
 
 const {
-  httpGetProperty,
-  httpGetAllProperties,
-  httpAddProperty,
+  httpGetListing,
+  httpGetAllListings,
+  httpAddListing,
   httpUpdateAmenities,
   httpUpdateRooms,
   httpUpdateDescription,
@@ -11,9 +11,9 @@ const {
 
 const propertiesRouter = express.Router();
 
-propertiesRouter.get('/:id', httpGetProperty);
-propertiesRouter.get('/', httpGetAllProperties);
-propertiesRouter.post('/', httpAddProperty);
+propertiesRouter.get('/:id', httpGetListing);
+propertiesRouter.get('/', httpGetAllListings);
+propertiesRouter.post('/', httpAddListing);
 propertiesRouter.put('/:id/amenities', httpUpdateAmenities);
 propertiesRouter.put('/:id/rooms', httpUpdateRooms);
 propertiesRouter.put('/:id/description', httpUpdateDescription);

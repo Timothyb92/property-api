@@ -1,85 +1,85 @@
-const { properties, propertyObject } = require('../properties');
+const { listings, listingObject } = require('../listings');
 
-async function getProperty(listingNumber) {
-  const property = properties[listingNumber - 1];
+async function getListing(listingNumber) {
+  const listing = listings[listingNumber - 1];
   
-  if (properties.length < listingNumber) {
+  if (listings.length < listingNumber) {
     return console.error(`Listing number does not exist`);
   }
-  return await property;
+  return await listing;
 };
 
-async function getAllProperties(){
-  return await properties;
+async function getAllListings(){
+  return await listings;
 }
 
-async function addProperty(listing) {
-  const currentListingNumber = properties.length + 1;
+async function addListing(listing) {
+  const currentListingNumber = listings.length + 1;
   const nullValues = [];
 
   const newListing = {
-    ...propertyObject,
+    ...listingObject,
     ...listing,
     listingNumber: currentListingNumber,
   };
 
-  for (const property in newListing) {
-    if (newListing[property] === null) {
-      nullValues.push(property);
+  for (const listing in newListing) {
+    if (newListing[listing] === null) {
+      nullValues.push(listing);
     }
   }
 
   if (nullValues.length > 0) {
-    throw new Error(`Missing property fields: ${nullValues}`);
+    throw new Error(`Missing listing fields: ${nullValues}`);
   }
 
-  properties.push(newListing);
+  listings.push(newListing);
   return newListing;
 };
 
 async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
- const property = properties[listingNumber - 1];
- let currentAmenities = property.amenities;
+ const listing = listings[listingNumber - 1];
+ let currentAmenities = listing.amenities;
 
  if (addAmenities && Array.isArray(addAmenities)) {
-   property.amenities = [...new Set([...currentAmenities, ...addAmenities])];
+   listing.amenities = [...new Set([...currentAmenities, ...addAmenities])];
  };
 
  if (removeAmenities && Array.isArray(removeAmenities)) {
-  property.amenities = property.amenities.filter(
+  listing.amenities = listing.amenities.filter(
     (amenity) => !removeAmenities.includes(amenity)
   );
  };
 
- return await property;
+ return await listing;
 };
 
  async function updateRooms(listingNumber, addRooms, removeRooms, updatedRooms) {
-  const property = properties[listingNumber - 1];
-  let currentRooms = property.rooms;
+  const listing = listings[listingNumber - 1];
+  let currentRooms = listing.rooms;
 
   if (addRooms && Array.isArray(addRooms)) {
-    property.rooms = [...new Set([...currentRooms, ...addRooms])];
+    listing.rooms = [...new Set([...currentRooms, ...addRooms])];
   };
 
   if (removeRooms && Array.isArray(removeRooms)) {
-    property.rooms = property.rooms.filter(
+    listing.rooms = listing.rooms.filter(
       (room) => !removeRooms.includes(room.name)
     );
   };
 
-  return await property;
+  return await listing;
  };
 
  async function updateDescription (listingNumber, description){
-  property.ownerDescription = description;
-  return await property.ownerDescription;
+  listing.ownerDescription = description;
+  return await listing.ownerDescription;
  }
 
 module.exports = {
-  getProperty,
-  getAllProperties,
-  addProperty,
+  getListing,
+  getAllListings,
+  addListing,
   updateAmenities,
   updateRooms,
   updateDescription,

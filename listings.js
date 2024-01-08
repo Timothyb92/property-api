@@ -1,4 +1,4 @@
-const properties = [
+const listings = [
   {
     amenities: [
       'grill',
@@ -239,7 +239,7 @@ const properties = [
   },
 ];
 
-const propertyObject = {
+const listingObject = {
   amenities: null,
   listingNumber: null,
   propOwner: null,
@@ -261,6 +261,6 @@ const propertyObject = {
 };
 
 module.exports = {
-  properties,
-  propertyObject,
+  listings,
+  listingObject,
 };

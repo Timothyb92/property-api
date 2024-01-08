@@ -1,7 +1,7 @@
 const { 
-  getProperty,
-  getAllProperties,
-  addProperty,
+  getListing,
+  getAllListings,
+  addListing,
   updateAmenities,
   updateRooms,
   updateDescription,
@@ -29,18 +29,18 @@ function validateUser(req) {
 
 async function handleCustomer(req) {
   const { userType, accountId } = await validateUser(req);
-  const property = await getProperty(req.params.id);
+  const listing = await getListing(req.params.id);
 
-  if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString()) {
+  if (userType === 'customer' && accountId && accountId.toString() === listing.accountId.toString()) {
     return true;
   }  
 };
 
-async function httpGetProperty(req, res) {
-  const property = await getProperty(req.params.id);
+async function httpGetListing(req, res) {
+  const listing = await getListing(req.params.id);
 
   if (await handleCustomer(req) || req.get('User-Type') === 'employee') {
-    return res.status(200).json(property); 
+    return res.status(200).json(listing); 
   } else {
     return res.status(403).json({
       error: 'Unauthorized access'
@@ -48,7 +48,7 @@ async function httpGetProperty(req, res) {
   }
 };
 
-async function httpGetAllProperties(req, res) {
+async function httpGetAllListings(req, res) {
   const { userType } = await validateUser(req);
 
   if (userType !== 'employee') {
@@ -57,10 +57,10 @@ async function httpGetAllProperties(req, res) {
     });
   }
 
-  return res.status(200).json(await getAllProperties())
+  return res.status(200).json(await getAllListings())
 };
 
-async function httpAddProperty(req, res) {
+async function httpAddListing(req, res) {
   const { userType, accountId } = await validateUser(req);
   
   if (userType !== 'customer') {
@@ -69,22 +69,22 @@ async function httpAddProperty(req, res) {
     })
   }
   
-  const property = req.body;
-  property.accountId = accountId;
-  await addProperty(property);
+  const listing = req.body;
+  listing.accountId = accountId;
+  await addListing(listing);
 
   return res.status(201).json({
-    message: 'Property added successfully',
-    property
+    message: 'Listing added successfully',
+    listing
   });
 };
 
 async function httpUpdateAmenities(req, res) {
-  const property = req.params.id;
+  const listing = req.params.id;
   const { addAmenities, removeAmenities } = req.body;
   
   if (await handleCustomer(req)) {
-    return res.status(200).json(await updateAmenities(property, addAmenities, removeAmenities));
+    return res.status(200).json(await updateAmenities(listing, addAmenities, removeAmenities));
   } else {
     return res.status(403).json({
       error: 'Unauthorized'
@@ -93,11 +93,11 @@ async function httpUpdateAmenities(req, res) {
 };
 
 async function httpUpdateRooms(req, res) {
-  const propertyId = req.params.id;
+  const listingId = req.params.id;
   const { addRooms, removeRooms, updatedRooms } = req.body;
 
   if (await handleCustomer(req)){
-    return res.status(200).json(await updateRooms(propertyId, addRooms, removeRooms, updatedRooms));
+    return res.status(200).json(await updateRooms(listingId, addRooms, removeRooms, updatedRooms));
   } else {
     return res.status(403).json({
       error: 'Unauthorized'
@@ -106,11 +106,11 @@ async function httpUpdateRooms(req, res) {
 };
 
 async function httpUpdateDescription(req, res) {
-  const propertyId = req.params.id;
+  const listingId = req.params.id;
   const { description } = req.body;
 
   if (await handleCustomer(req)) {
-    return res.status(200).json(await updateDescription(propertyId, description));
+    return res.status(200).json(await updateDescription(listingId, description));
   } else {
     return res.status(403).json({
       error: 'Unauthorized'
@@ -119,9 +119,9 @@ async function httpUpdateDescription(req, res) {
 };
 
 module.exports = {
-  httpGetProperty,
-  httpGetAllProperties,
-  httpAddProperty,
+  httpGetListing,
+  httpGetAllListings,
+  httpAddListing,
   httpUpdateAmenities,
   httpUpdateRooms,
   httpUpdateDescription,

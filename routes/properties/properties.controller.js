@@ -25,19 +25,38 @@ function validateUser(req) {
       userType: null
     };
   }
-}
+};
 
-async function httpGetProperty(req, res) {
+async function handleCustomer(req) {
   const { userType, accountId } = await validateUser(req);
   const property = await getProperty(req.params.id);
 
   if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString() || userType === 'employee') {
-    return res.status(200).json(property);
+    console.log(`Customer validated`)
+    return true;
+  }  
+};
+
+async function httpGetProperty(req, res) {
+  const property = await getProperty(req.params.id);
+
+  if (await handleCustomer(req)) {
+    return res.status(200).json(property); 
   } else {
     return res.status(403).json({
-      error: 'Unauthorized'
-    } );
+      error: 'Unauthorized access'
+    })
   }
+  // const { userType, accountId } = await validateUser(req);
+  // const property = await getProperty(req.params.id);
+
+  // if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString() || userType === 'employee') {
+  //   return res.status(200).json(property);
+  // } else {
+  //   return res.status(403).json({
+  //     error: 'Unauthorized'
+  //   } );
+  // }
 };
 
 async function httpGetAllProperties(req, res) {

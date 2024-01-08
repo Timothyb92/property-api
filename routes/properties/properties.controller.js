@@ -70,7 +70,7 @@ async function httpAddProperty(req, res) {
   }
   
   const property = req.body;
-  property.ownerId = accountId;
+  property.accountId = accountId;
   await addProperty(property);
 
   return res.status(201).json({

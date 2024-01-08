@@ -1,4 +1,4 @@
-const listings = [
+const properties = [
   {
     amenities: [
       'grill',
@@ -239,4 +239,28 @@ const listings = [
   },
 ];
 
-module.exports = listings;
+const propertyObject = {
+  amenities: null,
+  listingNumber: null,
+  propOwner: null,
+  numOfRooms: null,
+  numOfBaths: null,
+  fullAddress: null,
+  sqFt: null,
+  rooms: null,
+  propertyType: null,
+  floors: null,
+  lotSize: null,
+  parkingSpots: null,
+  petFriendly: null,
+  heatedPool: null,
+  gatedCommunity: null,
+  keylessEntry: null,
+  securityCameras: null,
+  ownerDescription: null,
+};
+
+module.exports = {
+  properties,
+  propertyObject,
+};

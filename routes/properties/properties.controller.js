@@ -32,7 +32,6 @@ async function handleCustomer(req) {
   const property = await getProperty(req.params.id);
 
   if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString() || userType === 'employee') {
-    console.log(`Customer validated`)
     return true;
   }  
 };
@@ -47,16 +46,6 @@ async function httpGetProperty(req, res) {
       error: 'Unauthorized access'
     })
   }
-  // const { userType, accountId } = await validateUser(req);
-  // const property = await getProperty(req.params.id);
-
-  // if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString() || userType === 'employee') {
-  //   return res.status(200).json(property);
-  // } else {
-  //   return res.status(403).json({
-  //     error: 'Unauthorized'
-  //   } );
-  // }
 };
 
 async function httpGetAllProperties(req, res) {
@@ -91,24 +80,42 @@ async function httpAddProperty(req, res) {
 };
 
 async function httpUpdateAmenities(req, res) {
-  const propertyId = req.params.id;
+  const property = req.params.id;
   const { addAmenities, removeAmenities } = req.body;
   
-  return res.status(200).json(await updateAmenities(propertyId, addAmenities, removeAmenities));
+  if (await handleCustomer(req)) {
+    return res.status(200).json(await updateAmenities(property, addAmenities, removeAmenities));
+  } else {
+    return res.status(403).json({
+      error: 'Unauthorized'
+    });
+  }
 };
 
 async function httpUpdateRooms(req, res) {
   const propertyId = req.params.id;
   const { addRooms, removeRooms, updatedRooms } = req.body;
 
-  return res.status(200).json(await updateRooms(propertyId, addRooms, removeRooms, updatedRooms));
+  if (await handleCustomer(req)){
+    return res.status(200).json(await updateRooms(propertyId, addRooms, removeRooms, updatedRooms));
+  } else {
+    return res.status(403).json({
+      error: 'Unauthorized'
+    });
+  }
 };
 
 async function httpUpdateDescription(req, res) {
   const propertyId = req.params.id;
   const { description } = req.body;
 
-  return res.status(200).json(await updateDescription(propertyId, description));
+  if (await handleCustomer(req)) {
+    return res.status(200).json(await updateDescription(propertyId, description));
+  } else {
+    return res.status(403).json({
+      error: 'Unauthorized'
+    });
+  }
 };
 
 module.exports = {

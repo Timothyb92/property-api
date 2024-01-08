@@ -72,7 +72,10 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
  };
 
  async function updateDescription (listingNumber, description){
+  const listing = listings[listingNumber - 1];
+  
   listing.ownerDescription = description;
+  
   return await listing.ownerDescription;
  }
 

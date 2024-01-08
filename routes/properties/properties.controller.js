@@ -31,7 +31,7 @@ async function handleCustomer(req) {
   const { userType, accountId } = await validateUser(req);
   const property = await getProperty(req.params.id);
 
-  if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString() || userType === 'employee') {
+  if (userType === 'customer' && accountId && accountId.toString() === property.accountId.toString()) {
     return true;
   }  
 };
@@ -39,7 +39,7 @@ async function handleCustomer(req) {
 async function httpGetProperty(req, res) {
   const property = await getProperty(req.params.id);
 
-  if (await handleCustomer(req)) {
+  if (await handleCustomer(req) || req.get('User-Type') === 'employee') {
     return res.status(200).json(property); 
   } else {
     return res.status(403).json({

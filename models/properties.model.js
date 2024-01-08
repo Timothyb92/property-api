@@ -61,20 +61,72 @@ const properties = [
     keylessEntry: true,
     securityCameras: true,
     ownerDescription: 'This is a 4 bedroom 2 bathroom house that sleeps 8 guests. 85 inch TV and large sectional for the whole family to gather around, fenced in back yard with a grill.',
+    accountId: 113,
   },
   {
-    listingNumber: 2,
-    propOwner: 'Jinny',
-    address: '777 Corona',
     amenities: [
-      'wifi',
+      'gym',
+      'pool table',
+      'pack n play',
+      'fire pit',
+      'balcony',
     ],
+    // listingNumber: 1,
+    propOwner: 'Jinny Kim',
+    numOfRooms: 4,
+    numOfBaths: 2,
+    fullAddress: {
+      street: '321 Emerson Dr',
+      city: 'Denver',
+      state: 'Colorado',
+      zip: 80202,
+    },
+    sqFt: 2000,
     rooms: [
+      {
+        name: 'bedroom 1',
+        beds: ['King']
+      },
+      {
+        name: 'living room',
+        beds: []
+      },
+      {
+        name: 'bedroom 2',
+        beds: ['Queen']
+      },
+      {
+        name: 'garage',
+        beds: []
+      },
+      {
+        name: 'lanai',
+        beds: []
+      },
+      {
+        name: 'bedroom 3',
+        beds: ['Twin', 'Twin', 'Queen']
+      },
+      {
+        name: 'bedroom 4',
+        beds: ['Twin bunk']
+      },
       {
         name: 'kitchen',
         beds: []
       },
     ],
+    propertyType: 'Townhouse',
+    floors: 2,
+    lotSize: 2300,
+    parkingSpots: 8,
+    petFriendly: false,
+    heatedPool: false,
+    gatedCommunity: true,
+    keylessEntry: true,
+    securityCameras: true,
+    ownerDescription: 'This is a modern townown in Downtown Denver with city views',
+    accountId: 824,
   },
 ];
 
@@ -105,7 +157,6 @@ async function getProperty(listingNumber) {
   if (properties.length < listingNumber) {
     return console.error(`Listing number does not exist`);
   }
-  console.log(`Listing owned by ${property.propOwner}`);
   return await property;
 };
 

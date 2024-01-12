@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "7565baee-2ac8-4373-8b1e-187a0f5f66dd",
+		"name": "Evolve",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18993931"
+	},
+	"item": [
+		{
+			"name": "GET all properties as empoyee",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "employee",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/properties",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties"
+					]
+				},
+				"description": "GET json object of all listings. Will return 403 error if HTTP header User-Type is not 'employee'"
+			},
+			"response": []
+		},
+		{
+			"name": "GET one prop",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "employee",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "113",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/properties/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"5"
+					]
+				},
+				"description": "GET one specific property. Will return 403 if HTTP header User-Type is undefinied, or if a customer with an incorrect Account-Id header tries to run the request"
+			},
+			"response": []
+		},
+		{
+			"name": "POST new property",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "824",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amenities\": [\n    \"swimming pool\",\n    \"gourmet kitchen\",\n    \"home theater\",\n    \"fireplace\",\n    \"private garden\"\n  ],\n  \"propOwner\": \"Jinny Kim\",\n  \"numOfRooms\": 3,\n  \"numOfBaths\": 2.5,\n  \"fullAddress\": {\n    \"street\": \"123 Oak Street\",\n    \"city\": \"Los Angeles\",\n    \"state\": \"California\",\n    \"zip\": 90001\n  },\n  \"sqFt\": 2200,\n  \"rooms\": [\n    { \"name\": \"master bedroom\", \"beds\": [\"King\"] },\n    { \"name\": \"guest bedroom\", \"beds\": [\"Queen\"] },\n    { \"name\": \"home office\", \"beds\": [] }\n  ],\n  \"propertyType\": \"Luxury Residence\",\n  \"floors\": 1,\n  \"lotSize\": 3000,\n  \"parkingSpots\": 2,\n  \"petFriendly\": true,\n  \"heatedPool\": true,\n  \"gatedCommunity\": true,\n  \"keylessEntry\": true,\n  \"securityCameras\": true,\n  \"ownerDescription\": \"Luxurious residence with a swimming pool and gourmet kitchen\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties"
+					]
+				},
+				"description": "Creates new property if HTTP header User-Type is 'customer'. Applies HTTP header 'Account-Id' to the listing object being created as an \"ownerId\" property"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT add amenities",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "113",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"addAmenities\": [\"gym\", \"grill\", \"coffee maker\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties/5/amenities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"5",
+						"amenities"
+					]
+				},
+				"description": "Adds amenities to an existing property, ensuring not to duplicate existing amenities. Will return 403 if HTTP header 'Account-Id' does not match the ownerId property of the listing, and/or if the HTTP header 'User-Type' is not 'customer'"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT remove amenities",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "824",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"removeAmenities\": [\"wifi\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties/2/amenities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"2",
+						"amenities"
+					]
+				},
+				"description": "Removese existing amenities from a listing. Will return 403 if HTTP header 'Account-Id' does not match the ownerId property of the listing, and/or if the HTTP header 'User-Type' is not 'customer'"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT add rooms",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "113",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"addRooms\": [\n        {\n            \"name\": \"game room\",\n            \"beds\": \"Queen\"\n        },\n        {\n            \"name\": \"theater room\",\n            \"beds\": [\"Twin\", \"Full\"]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties/1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"1",
+						"rooms"
+					]
+				},
+				"description": "Adds 1 or more rooms to an existing listing. Will return 403 if HTTP header 'Account-Id' does not match the ownerId property of the listing, and/or if the HTTP header 'User-Type' is not 'customer'"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT remove rooms",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"removeRooms\": [\"kitchen\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties/2/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"2",
+						"rooms"
+					]
+				},
+				"description": "Removes 1 or more room(s) from an existing listing. Will return 403 if HTTP header 'Account-Id' does not match the ownerId property of the listing, and/or if the HTTP header 'User-Type' is not 'customer'"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT update listing description",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "User-Type",
+						"value": "customer",
+						"type": "text"
+					},
+					{
+						"key": "Account-Id",
+						"value": "113",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Updated description\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/properties/5/description",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"properties",
+						"5",
+						"description"
+					]
+				},
+				"description": "Updates the ownerDescription property of an existing listing. Will return 403 if HTTP header 'Account-Id' does not match the ownerId property of the listing, and/or if the HTTP header 'User-Type' is not 'customer'"
+			},
+			"response": []
+		}
+	]
+}

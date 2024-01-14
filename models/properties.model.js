@@ -1,19 +1,19 @@
 const { listings, listingObject } = require('../listings');
 
-async function getListing(listingNumber) {
+function getListing(listingNumber) {
   const listing = listings[listingNumber - 1];
   
   if (listings.length < listingNumber) {
     return console.error(`Listing number does not exist`);
   }
-  return await listing;
+  return listing;
 };
 
-async function getAllListings(){
-  return await listings;
+function getAllListings(){
+  return listings;
 }
 
-async function addListing(listing) {
+function addListing(listing) {
   const currentListingNumber = listings.length + 1;
   const nullValues = [];
 
@@ -37,7 +37,7 @@ async function addListing(listing) {
   return newListing;
 };
 
-async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
+function updateAmenities(listingNumber, addAmenities, removeAmenities) {
  const listing = listings[listingNumber - 1];
  let currentAmenities = listing.amenities;
 
@@ -51,10 +51,10 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
   );
  };
 
- return await listing;
+ return listing;
 };
 
- async function updateRooms(listingNumber, addRooms, removeRooms, updatedRooms) {
+ function updateRooms(listingNumber, addRooms, removeRooms, updatedRooms) {
   const listing = listings[listingNumber - 1];
   let currentRooms = listing.rooms;
 
@@ -68,15 +68,15 @@ async function updateAmenities(listingNumber, addAmenities, removeAmenities) {
     );
   };
 
-  return await listing;
+  return listing;
  };
 
- async function updateDescription (listingNumber, description){
+ function updateDescription (listingNumber, description){
   const listing = listings[listingNumber - 1];
   
   listing.ownerDescription = description;
   
-  return await listing.ownerDescription;
+  return listing.ownerDescription;
  }
 
 module.exports = {

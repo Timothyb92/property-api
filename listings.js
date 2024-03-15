@@ -11,7 +11,7 @@ const listings = [
     numOfRooms: 4,
     numOfBaths: 2,
     fullAddress: {
-      street: '2420 Roygaris St NW',
+      street: '1234 Sesame Street',
       city: 'Palm Bay',
       state: 'Florida',
       zip: 32907,
